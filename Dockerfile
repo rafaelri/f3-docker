@@ -8,10 +8,12 @@ WORKDIR /usr/src/f3-7.2
 RUN make
 
 FROM debian:buster-slim
+RUN wget https://github.com/tianon/gosu/releases/download/1.11/gosu-amd64 -O /usr/local/bin/gosu && chmod +x /usr/local/bin/gosu
 VOLUME /var/f3
-USER daemon
 ENV F3DATADIR /var/f3
 ENV OPERATION ALL
+ENV USER root
+ENV DELAY 30m
 COPY docker-entrypoint.sh /
 ENTRYPOINT ["/docker-entrypoint.sh"]
 CMD ["f3"]
